@@ -1,8 +1,8 @@
 const REGIONES = [
-    { id: 1, name: "MONDSTADT", desc: "Modelado y Normalización", bg: "https://images6.alphacoders.com/110/1105432.jpg" },
-    { id: 2, name: "LIYUE", desc: "Lenguaje SQL y Consultas", bg: "https://images.alphacoders.com/112/1123447.jpg" },
-    { id: 3, name: "INAZUMA", desc: "Triggers y Procedimientos", bg: "https://images2.alphacoders.com/116/1167440.jpg" },
-    { id: 4, name: "SUMERU", desc: "Optimización y Diseño Físico", bg: "https://images8.alphacoders.com/124/1243171.jpg" }
+    { id: 1, name: "UNIDAD I", desc: "Modelado y Normalización", bg: "https://images6.alphacoders.com/110/1105432.jpg" },
+    { id: 2, name: "UNIDAD II", desc: "Lenguaje SQL y Consultas", bg: "https://images.alphacoders.com/112/1123447.jpg" },
+    { id: 3, name: "UNIDAD III", desc: "Triggers y Procedimientos", bg: "https://images2.alphacoders.com/116/1167440.jpg" },
+    { id: 4, name: "UNIDAD IV", desc: "Optimización y Diseño Físico", bg: "https://images8.alphacoders.com/124/1243171.jpg" }
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
