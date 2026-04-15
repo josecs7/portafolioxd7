@@ -9,7 +9,6 @@ body { background-color: #000; margin: 0; color: white; font-family: 'Inter', sa
 .text-genshin-accent { color: var(--genshin-accent); }
 .text-genshin-gold { color: var(--genshin-gold); }
 
-/* PORTADA */
 .hero-intro { height: 100vh; background-image: url('https://images8.alphacoders.com/109/1098522.jpg'); background-size: cover; background-position: center; }
 .hero-overlay { height: 100%; width: 100%; background: radial-gradient(circle, transparent, rgba(0,0,0,0.6)); display: flex; align-items: center; justify-content: center; }
 .hero-logo { width: 300px; animation: float 4s infinite ease-in-out; }
@@ -18,12 +17,10 @@ body { background-color: #000; margin: 0; color: white; font-family: 'Inter', sa
 
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-/* UNIDADES */
 .unit-banner { height: 100vh; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
 .unit-overlay { background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.95) 100%); width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .unit-title { font-size: 5rem; color: var(--genshin-gold); font-family: 'Cinzel'; margin-bottom: 0; }
 
-/* BANNERS DE SEMANAS */
 .weeks-banner-container { display: flex; gap: 20px; padding: 20px 0; overflow-x: auto; justify-content: flex-start; }
 .week-banner { flex: 0 0 280px; height: 550px; background-image: url('https://images.alphacoders.com/112/1123447.jpg'); background-size: cover; position: relative; border: 1px solid rgba(236,229,216,0.2); border-radius: 10px; transition: 0.3s; }
 .week-banner:hover { transform: translateY(-10px); border-color: var(--genshin-accent); }
@@ -39,7 +36,6 @@ body { background-color: #000; margin: 0; color: white; font-family: 'Inter', sa
 .btn-genshin-sm:hover { background: #fff; transform: scale(1.05); }
 .bg-genshin-dark { background-color: var(--dark-bg); }
 
-/* RESPONSIVO */
 @media (max-width: 768px) {
     .hero-title { font-size: 2rem; }
     .unit-title { font-size: 2.2rem; }
