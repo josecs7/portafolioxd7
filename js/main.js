@@ -1,141 +1,180 @@
-// --- CONFIGURACIÓN DE SUPABASE (CAMBIA ESTO CON TUS LLAVES) ---
-const SB_URL = 'https://nbfephqfbszsjjfbxnbr.supabase.co';
-const SB_KEY = 'sb_publishable_qJa2_h7LePnvAU1X7AjppA_4STY5l-B';
-const supabase = supabase.createClient(SB_URL, SB_KEY);
-
 const REGIONES = [
-    { id: 1, name: "MONDSTADT", desc: "Modelado y Normalización", bg: "https://images6.alphacoders.com/110/1105432.jpg" },
-    { id: 2, name: "LIYUE", desc: "Lenguaje SQL y Consultas", bg: "https://images.alphacoders.com/112/1123447.jpg" },
-    { id: 3, name: "INAZUMA", desc: "Triggers y Procedimientos", bg: "https://images2.alphacoders.com/116/1167440.jpg" },
-    { id: 4, name: "SUMERU", desc: "Optimización y Diseño Físico", bg: "https://images8.alphacoders.com/124/1243171.jpg" }
+    { id: 1, name: "UNIDAD I", desc: "Modelado y Normalización", bg: "img/uni1.jpeg" },
+    { id: 2, name: "UNIDAD II", desc: "Lenguaje SQL y Consultas", bg: "img/uni2.jpeg" },
+    { id: 3, name: "UNIDAD III", desc: "Triggers y Procedimientos", bg: "img/uni3.jpeg" },
+    { id: 4, name: "UNIDAD IV", desc: "Optimización y Diseño Físico", bg: "img/uni4.jpeg" }
 ];
 
+// 1. INICIALIZAR SUPABASE
+const supabaseUrl = 'https://nbfephqfbszsjjfbxnbr.supabase.co';
+const supabaseKey = 'sb_publishable_qJa2_h7LePnvAU1X7AjppA_4STY5l-B'; // Asegúrate de poner tu llave de la captura
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
 document.addEventListener('DOMContentLoaded', function() {
-    renderRegiones();
-    verificarAdmin();
+    var world = document.getElementById('world-container');
 
-    // Lógica de Login
-    document.getElementById('authBtn').onclick = function() {
-        if(localStorage.getItem('isAdmin')) {
-            localStorage.removeItem('isAdmin');
-            location.reload();
-        } else {
-            if(prompt("Clave de Administrador:") === "1234") {
-                localStorage.setItem('isAdmin', 'true');
-                location.reload();
-            }
-        }
-    };
-});
-
-function renderRegiones() {
-    const world = document.getElementById('world-container');
-    if (!world) return;
-    REGIONES.forEach(r => {
-        const section = document.createElement('section');
-        section.className = "unit-banner";
-        section.style.backgroundImage = "url('" + r.bg + "')";
-        section.innerHTML = '<div class="unit-overlay">' +
-            '<h1 class="unit-title Cinzel">' + r.name + '</h1>' +
-            '<button class="btn-genshin-sm mt-3" onclick="abrirRegion(' + r.id + ', \'' + r.name + '\')">EXPLORAR</button>' +
-            '</div>';
-        world.appendChild(section);
-    });
-}
-
-window.abrirRegion = async function(id, nombre) {
-    document.getElementById('modalUnitTitle').innerText = "RECURSOS DE " + nombre;
-    const list = document.getElementById('weeks-list');
-    list.innerHTML = "<p class='text-center'>Conectando con la nube de Celestia...</p>";
-    
-    const isAdmin = localStorage.getItem('isAdmin');
-
-    // TRAER ARCHIVOS DESDE SUPABASE
-    const { data: recursos, error } = await supabase
-        .from('recursos')
-        .select('*')
-        .eq('unidad_id', id);
-
-    list.innerHTML = "";
-    // Creamos 4 banners verticales (uno por semana)
-    for (let i = 1; i <= 4; i++) {
-        const banner = document.createElement('div');
-        banner.className = "week-banner shadow";
-        
-        let fileHtml = "";
-        if (recursos) {
-            // Filtramos archivos por unidad (aquí puedes mejorar el filtro por semana si gustas)
-            recursos.forEach(res => {
-                fileHtml += '<div class="d-flex justify-content-between align-items-center mb-2">' +
-                    '<a href="' + res.url + '" target="_blank" class="text-white small" style="text-decoration:none">📄 ' + res.nombre + '</a>' +
-                    (isAdmin ? '<div>' +
-                        '<span class="text-info me-2" style="cursor:pointer; font-size:10px" onclick="editarRecurso(\''+res.id+'\')">EDITAR</span>' +
-                        '<span class="text-danger" style="cursor:pointer; font-size:10px" onclick="eliminarRecurso(\''+res.id+'\', \''+res.ruta_storage+'\')">X</span>' +
-                    '</div>' : '') +
+    // Renderizar Unidades
+    if (world) {
+        REGIONES.forEach(function(r) {
+            var section = document.createElement('section');
+            section.className = "unit-banner";
+            section.style.backgroundImage = "url('" + r.bg + "')";
+            section.innerHTML = '<div class="unit-overlay">' +
+                '<h1 class="unit-title Cinzel">' + r.name + '</h1>' +
+                '<p class="text-genshin-gold opacity-75">' + r.desc + '</p>' +
+                '<button class="btn-genshin-sm mt-3" onclick="abrirRegion(' + r.id + ', \'' + r.name + '\')">EXPLORAR RECURSOS</button>' +
                 '</div>';
-            });
+            world.appendChild(section);
+        });
+    }
+
+    // Abrir Modal de Recursos
+    window.abrirRegion = function(id, nombre) {
+        document.getElementById('modalUnitTitle').innerText = "RECURSOS DE " + nombre;
+        var list = document.getElementById('weeks-list');
+        list.innerHTML = "";
+        var isAdmin = localStorage.getItem('userRole') === 'admin';
+
+        for (var i = 1; i <= 4; i++) {
+            var key = "u" + id + "w" + i;
+            var files = JSON.parse(localStorage.getItem(key)) || []; // Se inicia vacío
+            
+            var banner = document.createElement('div');
+            banner.className = "week-banner shadow";
+            
+            // LÓGICA DE DRAG AND DROP (Solo Admin)
+            if (isAdmin) {
+                let currentKey = key;
+                let currentId = id;
+                
+                banner.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = '#f4d03f';
+                });
+                
+                banner.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = 'rgba(236,229,216,0.2)';
+                });
+                
+                banner.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = 'rgba(236,229,216,0.2)';
+                    // Toma los archivos arrastrados y los manda a subir
+                    handleDropFiles(e.dataTransfer.files, currentKey, currentId);
+                });
+            }
+            
+            var fileHtml = "";
+            if (files.length === 0) {
+                fileHtml = "<p class='small text-secondary text-center mt-4'>Sin archivos</p>";
+            } else {
+                files.forEach(function(file, idx) { 
+                    fileHtml += '<div class="d-flex justify-content-between align-items-center mb-2 border-bottom border-secondary pb-1">' +
+                        // target="_blank" asegura que el archivo se abra en otra pestaña
+                        '<a href="' + file.r + '" target="_blank" style="text-decoration:none; color:#ece5d8; font-size:0.85rem; word-break: break-all;">📄 ' + file.n + '</a>' +
+                        (isAdmin ? '<div style="font-size:10px; text-align:right; min-width: 30px;">' +
+                            '<span class="text-danger fw-bold" style="cursor:pointer" onclick="deleteFile(\''+key+'\','+idx+')">X</span>' +
+                        '</div>' : '') +
+                        '</div>'; 
+                });
+            }
+
+            // Diseño de la tarjeta con zona de arrastre
+            banner.innerHTML = '<div class="week-banner-overlay d-flex flex-column" style="height:100%;">' +
+                '<div class="week-number">SEMANA ' + (((id-1)*4)+i) + '</div>' +
+                '<h5 class="Cinzel text-white mt-1">Sesión de Clase</h5>' +
+                '<div id="box-' + key + '" class="my-2 flex-grow-1" style="overflow-y: auto;">' + fileHtml + '</div>' +
+                (isAdmin ? '<div class="mt-auto pt-2 border-top border-secondary text-center">' +
+                    '<p class="small text-genshin-accent mb-1" style="font-size:0.7rem;">⬇️ ARRASTRA ARCHIVOS AQUÍ ⬇️</p>' +
+                    // Input múltiple oculto por si prefieren hacer clic
+                    '<input type="file" multiple class="d-none" id="file-'+key+'" onchange="handleDropFiles(this.files, \''+key+'\', '+id+')">' +
+                    '<button class="btn-genshin-sm w-100" style="font-size:0.6rem" onclick="document.getElementById(\'file-'+key+'\').click()">O SELECCIONAR</button>' +
+                '</div>' : '') +
+                '</div>';
+            list.appendChild(banner);
+        }
+        new bootstrap.Modal(document.getElementById('weekModal')).show();
+    };
+
+    // FUNCION MAESTRA DE SUBIDA (Soporta múltiples archivos)
+    window.handleDropFiles = async function(files, key, unidad_id) {
+        if (!files || files.length === 0) return;
+        
+        let cur = JSON.parse(localStorage.getItem(key)) || [];
+        alert(`Subiendo ${files.length} archivo(s)... Por favor no cierres la ventana.`);
+
+        // Recorremos todos los archivos soltados
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            let fileExt = file.name.split('.').pop();
+            let uniqueName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+            let filePath = `unidad_${unidad_id}/${uniqueName}`;
+
+            // A) Subir al Storage
+            const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                .from('recursos')
+                .upload(filePath, file);
+
+            if (uploadError) {
+                console.error("Error subiendo", file.name, uploadError);
+                continue; 
+            }
+
+            // B) Obtener URL
+            const { data: publicUrlData } = supabaseClient.storage
+                .from('recursos')
+                .getPublicUrl(filePath);
+
+            // C) Registrar en la BD 
+            await supabaseClient.from('recursos').insert([
+                { nombre: file.name, url: publicUrlData.publicUrl, unidad_id: unidad_id, ruta_storage: filePath }
+            ]);
+
+            // D) Guardar referencia en localStorage para la semana correspondiente
+            cur.push({ n: file.name, r: publicUrlData.publicUrl, s_path: filePath });
         }
 
-        banner.innerHTML = '<div class="week-banner-overlay">' +
-            '<div class="week-number">SESIÓN SEMANA ' + i + '</div>' +
-            '<div class="my-3" style="max-height:200px; overflow-y:auto;">' + fileHtml + '</div>' +
-            (isAdmin ? '<button class="btn-genshin-sm w-100" style="font-size:0.6rem" onclick="subirArchivoALaNube(' + id + ')">+ SUBIR ARCHIVO</button>' : '') +
-            '</div>';
-        list.appendChild(banner);
-    }
-    new bootstrap.Modal(document.getElementById('weekModal')).show();
-};
-
-// --- FUNCIONES DINÁMICAS (SUBIR, EDITAR, ELIMINAR) ---
-
-window.subirArchivoALaNube = async function(unidadId) {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.onchange = async (e) => {
-        const file = e.target.files[0];
-        const nombreVisible = prompt("¿Qué nombre le ponemos al archivo?", file.name);
-        const rutaStorage = 'u' + unidadId + '/' + Date.now() + '_' + file.name;
-
-        // 1. Subir el archivo real al Storage de Supabase
-        const { data, error } = await supabase.storage.from('recursos').upload(rutaStorage, file);
-        if (error) return alert("Error al subir archivo: " + error.message);
-
-        // 2. Obtener el link público del archivo
-        const { data: urlPublica } = supabase.storage.from('recursos').getPublicUrl(rutaStorage);
-
-        // 3. Guardar el nombre y el link en la tabla de la Base de Datos
-        await supabase.from('recursos').insert([{ 
-            nombre: nombreVisible, 
-            url: urlPublica.publicUrl, 
-            unidad_id: unidadId,
-            ruta_storage: rutaStorage 
-        }]);
-        
-        location.reload();
+        // Guardar el arreglo actualizado y recargar para ver cambios
+        localStorage.setItem(key, JSON.stringify(cur));
+        location.reload(); 
     };
-    input.click();
-};
 
-window.eliminarRecurso = async function(id, ruta) {
-    if(confirm("¿Eliminar este archivo permanentemente?")) {
-        await supabase.storage.from('recursos').remove([ruta]);
-        await supabase.from('recursos').delete().eq('id', id);
-        location.reload();
-    }
-};
+    // FUNCION DE BORRADO (Borra de Nube y Local)
+    window.deleteFile = async function(key, idx) {
+        if(confirm("¿Eliminar recurso permanentemente?")) {
+            var cur = JSON.parse(localStorage.getItem(key));
+            var fileData = cur[idx];
+            
+            // Si el archivo tiene ruta en Supabase, lo borramos del Storage y DB
+            if (fileData.s_path) {
+                await supabaseClient.storage.from('recursos').remove([fileData.s_path]);
+                await supabaseClient.from('recursos').delete().eq('ruta_storage', fileData.s_path);
+            }
+            
+            cur.splice(idx, 1);
+            localStorage.setItem(key, JSON.stringify(cur));
+            location.reload();
+        }
+    };
 
-window.editarRecurso = async function(id) {
-    const nuevoNombre = prompt("Nuevo nombre para el archivo:");
-    if(nuevoNombre) {
-        await supabase.from('recursos').update({ nombre: nuevoNombre }).eq('id', id);
-        location.reload();
-    }
-};
+    // Autenticación (Login/Reg)
+    document.getElementById('regBtn').onclick = function() {
+        var u = prompt("Crea tu usuario:"); var p = prompt("Crea tu contraseña:");
+        if(u && p) { localStorage.setItem('u', u); localStorage.setItem('p', p); alert("¡Viajero registrado!"); }
+    };
 
-function verificarAdmin() {
-    if (localStorage.getItem('isAdmin')) {
+    document.getElementById('authBtn').onclick = function() {
+        if(localStorage.getItem('userRole') === 'admin') { localStorage.clear(); location.reload(); return; }
+        var u = prompt("Usuario:"); var p = prompt("Contraseña:");
+        if((u === localStorage.getItem('u') && p === localStorage.getItem('p')) || (u === 'admin' && p === '1234')) {
+            localStorage.setItem('userRole', 'admin'); location.reload();
+        } else { alert("Error de acceso."); }
+    };
+
+    if (localStorage.getItem('userRole') === 'admin') {
         document.getElementById('roleLabel').innerText = "MODO: ADMINISTRADOR";
         document.getElementById('roleLabel').classList.remove('d-none');
         document.getElementById('authBtn').innerText = "CERRAR SESIÓN";
     }
-}
+});
