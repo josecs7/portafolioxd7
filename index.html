@@ -1,60 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CP DB II | Portafolio Final</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=1.1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SYS_DB // Root_Access</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=7.0">
 </head>
 <body>
 
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-genshin-nav">
-        <div class="container-fluid px-lg-5">
-            <a class="navbar-brand fw-bold Cinzel" href="#">BASE DE DATOS <span class="text-genshin-accent">II</span></a>
-            <div class="ms-auto d-flex align-items-center">
-                <span id="roleLabel" class="me-3 text-white small d-none d-md-inline">MODO: INVITADO</span>
-                <div id="authActions">
-                    <button class="btn-genshin-sm me-2" id="authBtn">ACCEDER</button>
-                    <button class="btn-genshin-sm" style="background:#f4d03f" id="regBtn">REGISTRO</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-genshin-nav">
+  <div class="container-fluid px-lg-5">
+    <a class="navbar-brand fw-bold Cinzel text-genshin-gold" href="#" id="navbar-nombre">SYS_DB <span class="text-genshin-accent">[II]</span></a>
+    
+    <button class="navbar-toggler border-genshin" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <section class="hero-intro">
-        <div class="hero-overlay text-center">
-            <div class="hero-content">
-                <img src="img/log.png" class="hero-logo mb-4">
-                <h1 class="Cinzel hero-title">PORTAFOLIO DIGITAL</h1>
-                <p class="hero-subtitle">INGENIERÍA DE SISTEMAS | 2026</p>
-                <div class="hero-divider"></div>
-                <p class="text-white opacity-50 small">Desliza para explorar las regiones de Base de Datos</p>
-            </div>
-        </div>
-    </section>
-
-    <div id="world-container"></div>
-
-    <div class="modal fade" id="weekModal" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content bg-genshin-dark text-white">
-                <div class="modal-header border-0 px-lg-5 pt-4">
-                    <h5 class="modal-title Cinzel h2 text-genshin-gold" id="modalUnitTitle">RECURSOS</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body px-lg-5 pb-5">
-                    <div id="weeks-list" class="weeks-banner-container"></div>
-                </div>
-            </div>
-        </div>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link nav-link-white" href="#inicio">> INIT</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-white" href="#sobre-mi">> USER_DATA</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-white" href="trabajos.html">> REPOSITORY</a></li>
+        <li class="nav-item ms-3" id="nav-auth">
+          <a class="btn-genshin-sm text-decoration-none" href="login.html" id="btn-auth">SYS_LOGIN</a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <script src="js/main.js?v=1.1"></script>
+<section id="inicio" class="hero-intro text-center">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      
+      <div class="logo-glitch-container mb-4">
+          <img src="img/logocp.png" class="hero-logo" alt="UPLA_SAMURAI" onerror="this.src='https://via.placeholder.com/150/ff003c/000?text=UPLA'">
+      </div>
+
+      <h1 class="Cinzel hero-title">DIGITAL_PORTFOLIO</h1>
+      <p class="hero-subtitle text-genshin-accent" style="letter-spacing: 3px;">INGENIERÍA DE SISTEMAS | 2026</p>
+      <div class="hero-divider"></div>
+      <a href="trabajos.html" class="btn-genshin-sm mt-3 text-decoration-none">> ACCESS_DATA</a>
+    </div>
+  </div>
+</section>
+
+<section id="sobre-mi" class="container my-5 pt-5">
+  <div class="p-4 bg-genshin-dark border-genshin">
+    <div class="row align-items-center">      
+      <div class="col-md-4 text-center">
+        <img src="img/yo.png" class="img-fluid border-genshin-gold mb-3" alt="Jose Castillon" style="max-width: 200px; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);" onerror="this.src='https://via.placeholder.com/200/0a0a0c/00e6f2?text=USER'">
+      </div>
+      <div class="col-md-8 text-white">
+        <h2 class="Cinzel text-genshin-accent mb-4">IDENTIFICACIÓN DE USUARIO</h2>
+        <p>
+          > NOMBRE: Jose Castillon<br>
+          > UBICACIÓN: Huancayo, Perú<br>
+          > AFILIACIÓN: Universidad Peruana Los Andes (UPLA)<br>
+          > FACULTAD: Ingeniería de Sistemas<br><br>
+          Nodo central de gestión de recursos para el curso de Base de Datos II. 
+          Encriptación de paquetes SQL y documentación técnica procesada durante el ciclo académico 2026.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.5/dist/umd/supabase.js"></script>
+
+<script src="js/main.js"></script>
 </body>
 </html>

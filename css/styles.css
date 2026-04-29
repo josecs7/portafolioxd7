@@ -1,0 +1,236 @@
+/* ───────────────────────────────────────────────
+   VARIABLES DE INTERFAZ: PROTOCOLO ARASAKA
+   ─────────────────────────────────────────────── */
+:root {
+    --cp-red: #ff003c;
+    --cp-red-dim: rgba(255, 0, 60, 0.2);
+    --cp-cyan: #00e6f2;
+    --cp-dark: #050505;
+    --cp-panel: #0a0a0c;
+    --cp-border: 1px solid var(--cp-red);
+}
+
+/* ───────────────────────────────────────────────
+   GLOBALES Y EFECTOS CRT
+   ─────────────────────────────────────────────── */
+body { 
+    background-color: var(--cp-dark); 
+    margin: 0; 
+    color: var(--cp-red); 
+    font-family: 'Share Tech Mono', monospace; 
+    overflow-x: hidden; 
+    position: relative;
+}
+
+/* EFECTO SCANLINE CRT (Líneas de pantalla de la imagen) */
+body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+/* ───────────────────────────────────────────────
+   TIPOGRAFÍA Y DECORADORES HUD
+   ─────────────────────────────────────────────── */
+.Cinzel { 
+    font-family: 'Share Tech Mono', monospace; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+}
+
+.text-genshin-accent { 
+    color: var(--cp-cyan); 
+    text-shadow: 0 0 5px var(--cp-cyan), 0 0 10px var(--cp-cyan); 
+}
+
+.text-genshin-gold { 
+    color: var(--cp-red); 
+    opacity: 0.8;
+}
+
+.bg-genshin-dark { 
+    background-color: var(--cp-panel) !important; 
+}
+
+/* Bordes de Sistema */
+.border-genshin { 
+    border: var(--cp-border) !important; 
+    box-shadow: inset 0 0 15px var(--cp-red-dim);
+}
+.border-genshin-gold { 
+    border: 1px solid var(--cp-cyan); 
+}
+
+/* ───────────────────────────────────────────────
+   NAVEGACIÓN HUD SUPERIOR
+   ─────────────────────────────────────────────── */
+.bg-genshin-nav { 
+    background: rgba(5, 5, 5, 0.95); 
+    border-bottom: 2px solid var(--cp-red);
+    box-shadow: 0 0 15px var(--cp-red-dim);
+}
+
+.nav-link-white { 
+    color: var(--cp-red) !important; 
+    font-weight: bold; 
+    transition: 0.3s; 
+    text-transform: uppercase;
+}
+
+.nav-link-white:hover { 
+    color: var(--cp-cyan) !important; 
+    text-shadow: 0 0 8px var(--cp-cyan);
+}
+
+/* ───────────────────────────────────────────────
+   BOTONES Y COMPONENTES
+   ─────────────────────────────────────────────── */
+.btn-genshin-sm { 
+    background: rgba(255, 0, 60, 0.1); 
+    border: 1px solid var(--cp-red); 
+    font-weight: bold; 
+    padding: 8px 20px; 
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); 
+    transition: 0.2s; 
+    color: var(--cp-red);
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-genshin-sm:hover { 
+    background: var(--cp-red); 
+    color: #000;
+    box-shadow: 0 0 15px var(--cp-red);
+    cursor: pointer;
+}
+
+/* Módulos de Datos (Tarjetas) */
+.card {
+    background-color: var(--cp-panel) !important;
+    border: var(--cp-border) !important;
+    border-radius: 0 !important;
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 20px var(--cp-red-dim);
+    border-color: var(--cp-cyan) !important;
+}
+
+/* Inputs de Sistema */
+.form-control {
+    background: rgba(255,0,60,0.05) !important;
+    border: 1px solid var(--cp-red) !important;
+    border-radius: 0 !important;
+    color: var(--cp-cyan) !important;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 10px var(--cp-cyan) !important;
+    border-color: var(--cp-cyan) !important;
+}
+
+/* ───────────────────────────────────────────────
+   MÓDULO DE GLITCH: logocp.png
+   ─────────────────────────────────────────────── */
+.logo-glitch-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.hero-logo { 
+    width: 250px; 
+    filter: drop-shadow(0 0 10px var(--cp-red));
+    display: block;
+}
+
+/* Pseudo-elementos para el glitch */
+.logo-glitch-container::before,
+.logo-glitch-container::after {
+    content: " ";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* RUTA SINCRONIZADA CON TU IMAGEN */
+    background-image: url('../img/logocp.png'); 
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    z-index: -1; 
+}
+
+.logo-glitch-container::before {
+    filter: drop-shadow(-2px 0 var(--cp-cyan)); 
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.logo-glitch-container::after {
+    filter: drop-shadow(2px 0 var(--cp-red)); 
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+/* Keyframes de Glitch */
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(80% 0 0 0); transform: translate(-5px, 0); }
+    20% { clip-path: inset(45% 0 45% 0); transform: translate(-3px, -2px); }
+    40% { clip-path: inset(0 0 0 0); transform: translate(2px, 2px); }
+    80% { clip-path: inset(0 0 100% 0); transform: translate(0, 0); }
+    100% { clip-path: inset(10% 0 85% 0); transform: translate(5px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(0 0 80% 0); transform: translate(5px, 0); }
+    30% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+    50% { clip-path: inset(0 0 80% 0); transform: translate(2px, 0); }
+    80% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
+    100% { clip-path: inset(85% 0 10% 0); transform: translate(-5px, 0); }
+}
+
+/* ───────────────────────────────────────────────
+   PORTADA Y MODALES
+   ─────────────────────────────────────────────── */
+.hero-intro { 
+    height: 100vh; 
+    background-image: radial-gradient(circle at center, #1a0006 0%, #050505 100%);
+    display: flex; align-items: center; justify-content: center; 
+}
+
+.hero-title { 
+    font-size: 4rem; 
+    color: var(--cp-red); 
+    text-shadow: 2px 2px 0px var(--cp-cyan); 
+}
+
+.hero-divider { 
+    width: 150px; height: 2px; background: var(--cp-cyan); margin: 20px auto; 
+    box-shadow: 0 0 10px var(--cp-cyan);
+}
+
+.modal-custom {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1050;
+  background: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: 10% auto; padding: 20px; width: 50%; 
+  background: var(--cp-panel) !important;
+  border: 2px solid var(--cp-red);
+}
+
+.cerrar { cursor: pointer; float: right; font-size: 25px; color: var(--cp-red); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cp-dark); }
+::-webkit-scrollbar-thumb { background: var(--cp-red); }

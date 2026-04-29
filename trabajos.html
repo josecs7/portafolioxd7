@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Repository // SYS_DB</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-black text-white">
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-genshin-nav">
+  <div class="container-fluid px-lg-5">
+    <a class="navbar-brand fw-bold Cinzel text-genshin-gold" href="index.html" id="navbar-nombre">SYS_DB <span class="text-genshin-accent">[II]</span></a>
+    <button class="navbar-toggler border-genshin" type="button" data-bs-toggle="collapse" data-bs-target="#menu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link nav-link-white" href="index.html">> INIT</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-white" href="trabajos.html">> REPOSITORY</a></li>
+        <li class="nav-item ms-3"><a class="btn-genshin-sm text-decoration-none" href="login.html" id="btn-auth">SYS_LOGIN</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-5 pt-5">
+  <section id="trabajos">
+    <div class="text-center mb-5 mt-4">
+      <h1 class="Cinzel text-genshin-accent hero-title" style="font-size: 3rem;">DB_REPOSITORY</h1>
+      <div class="hero-divider"></div>
+      <p class="text-genshin-gold">> ESTADO: EN LÍNEA // CONEXIÓN SEGURA</p>
+    </div>
+
+    <div id="panel-admin" class="container mb-5" style="display:none;">
+      <div class="card p-4">
+        <h4 class="mb-3 Cinzel text-genshin-accent">> ADMIN_OVERRIDE</h4>
+        <input type="text" id="titulo-semana" class="form-control my-2" placeholder="> TITULO_SEMANA">
+        <input type="text" id="descripcion-semana" class="form-control my-2" placeholder="> DESCRIPCIÓN_CORTA">
+        <input type="file" id="archivo-semana" class="form-control my-2">
+        <select id="unidad-semana" class="form-control my-2">
+          <option value="1">ROOT_DIR: UNIDAD_I</option>
+          <option value="2">ROOT_DIR: UNIDAD_II</option>
+          <option value="3">ROOT_DIR: UNIDAD_III</option>
+          <option value="4">ROOT_DIR: UNIDAD_IV</option>
+        </select>
+        <button id="btn-agregar" type="button" class="btn-genshin-sm mt-3 w-100" onclick="agregarSemana()">UPLOAD_PAYLOAD</button>
+      </div>
+    </div>
+
+    <div class="mb-5 p-4 bg-genshin-dark border-genshin">
+      <h3 class="Cinzel text-genshin-gold mb-4 border-bottom pb-2" style="border-color: var(--cp-red) !important;">[ DIR: UNIDAD_I ]</h3>
+      <div class="row" id="unidad-1"></div>
+    </div>
+
+    <div class="mb-5 p-4 bg-genshin-dark border-genshin">
+      <h3 class="Cinzel text-genshin-gold mb-4 border-bottom pb-2" style="border-color: var(--cp-red) !important;">[ DIR: UNIDAD_II ]</h3>
+      <div class="row" id="unidad-2"></div>
+    </div>
+
+    <div class="mb-5 p-4 bg-genshin-dark border-genshin">
+      <h3 class="Cinzel text-genshin-gold mb-4 border-bottom pb-2" style="border-color: var(--cp-red) !important;">[ DIR: UNIDAD_III ]</h3>
+      <div class="row" id="unidad-3"></div>
+    </div>
+
+    <div class="mb-5 p-4 bg-genshin-dark border-genshin">
+      <h3 class="Cinzel text-genshin-gold mb-4 border-bottom pb-2" style="border-color: var(--cp-red) !important;">[ DIR: UNIDAD_IV ]</h3>
+      <div class="row" id="unidad-4"></div>
+    </div>
+  </section>
+</div>
+
+<div id="modal-editar" class="modal-custom" style="display:none;">
+  <div class="modal-content mt-5">
+    <span class="cerrar" onclick="cerrarEditar()">&times;</span>
+    <h4 class="Cinzel text-genshin-accent mb-3">> OVERWRITE_DATA</h4>
+    <input type="text" id="edit-titulo" class="form-control my-2" placeholder="> NUEVO_TITULO">
+    <input type="text" id="edit-descripcion" class="form-control my-2" placeholder="> NUEVA_DESCRIPCIÓN">
+    <button class="btn-genshin-sm mt-4 w-100" onclick="guardarEdicion()">EXECUTE_UPDATE</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.5/dist/umd/supabase.js"></script>
+
+<script src="js/main.js"></script>
+</body>
+</html>

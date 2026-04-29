@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login // SYS_DB</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100 hero-intro">
+  
+  <div class="hero-overlay w-100 h-100 d-flex justify-content-center align-items-center">
+    <div class="card p-4 text-white" style="width: 360px;">
+      <h3 class="text-center mb-1 Cinzel text-genshin-accent">AUTH_REQUIRED</h3>
+      <p class="text-center text-genshin-gold mb-4" style="font-size: 13px;">> INGRESE CREDENCIALES_</p>
+
+      <input type="text" id="input-usuario" class="form-control mb-3" placeholder="> USER_ID">
+      <input type="password" id="input-password" class="form-control mb-3" placeholder="> PASSWORD">
+
+      <div class="text-danger small text-center mb-2" id="msg-error" style="display:none; text-shadow: 0 0 5px red;"></div>
+      <div class="text-success small text-center mb-2" id="msg-exito" style="display:none; color: #00ff00 !important; text-shadow: 0 0 5px lime;">> ACCESO CONCEDIDO...</div>
+
+      <button class="btn-genshin-sm w-100 mt-2" onclick="iniciarSesion()">EJECUTAR_LOGIN</button>
+
+      <hr class="border-secondary my-4" style="border-color: var(--cp-red) !important; opacity: 0.3;">
+
+      <p class="text-center text-genshin-gold mb-2" style="font-size: 12px;">¿NUEVO OPERADOR?</p>
+      <button class="btn-genshin-sm w-100" style="background: transparent; color: var(--cp-cyan); border-color: var(--cp-cyan);" onclick="mostrarRegistro()">CREAR_IDENTIDAD</button>
+
+      <div id="panel-registro" style="display:none; margin-top: 16px;">
+        <hr class="border-secondary" style="border-color: var(--cp-red) !important; opacity: 0.3;">
+        <p class="text-center Cinzel text-genshin-accent mb-3" style="font-size: 14px;">NUEVO REGISTRO</p>
+        <input type="text" id="reg-usuario" class="form-control mb-2" placeholder="> NEW_USER_ID">
+        <input type="password" id="reg-password" class="form-control mb-2" placeholder="> NEW_PASSWORD">
+        <div class="text-danger small text-center mb-2" id="msg-reg-error" style="display:none;"></div>
+        <div class="text-success small text-center mb-2" id="msg-reg-exito" style="display:none; color: #00ff00 !important;"></div>
+        <button class="btn-genshin-sm w-100 mt-2" style="background: var(--cp-cyan); color: #000;" onclick="registrarUsuario()">REGISTRAR_OPERADOR</button>
+      </div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.5/dist/umd/supabase.js"></script>
+
+<script src="js/main.js"></script>
+</body>
+</html>
